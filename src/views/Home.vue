@@ -1,17 +1,7 @@
 <template>
   <v-app>
-    <!-- <v-navigation-drawer
-      app
-      class="ma-2 mt-4 rounded-lg"
-      color="teal accent-4"
-      width="250"
-      height="450"
-      dark
-      expand-on-hover
-      permanent
-    >
-      <NavDrawer />
-    </v-navigation-drawer> -->
+    <Header />
+
     <v-main class="pa-0 ml-2">
       <DashBoard />
     </v-main>
@@ -19,19 +9,19 @@
 </template>
 
 <script>
+import Header from "../components/Header";
 import DashBoard from "../components/DashBoard";
 import NavDrawer from "../components/NavDrawer";
 
 export default {
   name: "Home",
   components: {
+    Header,
     DashBoard,
     NavDrawer,
   },
   data() {
-    return {
-      drawer: false,
-    };
+    return {};
   },
 };
 </script>
