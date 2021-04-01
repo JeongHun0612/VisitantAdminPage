@@ -31,7 +31,7 @@
     </v-app-bar>
     <v-navigation-drawer
       v-model="drawer"
-      app
+      absolute
       class="ma-2 mt-4 rounded-lg"
       color="teal accent-4"
       width="250"
