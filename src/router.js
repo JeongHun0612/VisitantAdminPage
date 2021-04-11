@@ -1,46 +1,67 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
 import AdminPageLayout from './views/AdminPageLayout.vue'
 
 Vue.use(Router)
 
+const rejectAuthUser = (to, from, next) => {
+    if (store.state.isLogin === true) {
+        alert("이미 로그인을 하였습니다.")
+        next("/")
+    } else {
+        next()
+    }
+}
+
+const onlyAuthUser = (to, from, next) => {
+    if (store.state.isLogin === false) {
+        alert("로그인이 필요한 기능입니다.")
+        next("/login")
+    } else {
+        next()
+    }
+}
+
 const Login = () =>
     import ("./components/Login");
-const Dashboard = () =>
-    import ("./components/Dashboard");
+const DashBoard = () =>
+    import ("./components/DashBoard");
 const Account = () =>
     import ("./components/Account");
 const Admin = () =>
     import ("./components/Admin");
 
 const routes = [{
-        path: '/',
-        component: AdminPageLayout,
-        redirect: '/dashboard',
-        children: [{
-                path: '/dashboard',
-                name: 'Dashboard',
-                component: Dashboard
-            },
-            {
-                path: '/account',
-                name: 'Account',
-                component: Account
-            },
-            {
-                path: '/admin',
-                name: 'Admin',
-                component: Admin
-            },
-        ]
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: Login
-    },
-
-]
+    path: '/',
+    component: AdminPageLayout,
+    redirect: '/login',
+    children: [{
+            path: '/dashboard',
+            name: 'DashBoard',
+            beforeEnter: onlyAuthUser,
+            component: DashBoard
+        },
+        {
+            path: '/account',
+            name: 'Account',
+            beforeEnter: onlyAuthUser,
+            component: Account
+        },
+        {
+            path: '/admin',
+            name: 'Admin',
+            beforeEnter: onlyAuthUser,
+            component: Admin
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            beforeEnter: rejectAuthUser,
+            component: Login
+        },
+    ]
+}, ]
 
 export default new Router({
     mode: 'history',

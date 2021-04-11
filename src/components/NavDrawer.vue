@@ -35,11 +35,10 @@
 export default {
   data() {
     return {
-      selectedItem: "",
       items: [
         { title: "Dashboard", icon: "mdi-view-dashboard", link: "/dashboard" },
-        { title: "Account", icon: "mdi-account-box", link: "/account" },
         { title: "Admin", icon: "mdi-gavel", link: "/admin" },
+        { title: "Account", icon: "mdi-account-box", link: "/account" },
       ],
     };
   },
