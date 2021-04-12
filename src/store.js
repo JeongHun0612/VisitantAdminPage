@@ -31,23 +31,23 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        login({ dispatch }, loginObj) {
+        login({ commit, dispatch }, loginObj) {
             axios.post("https://reqres.in/api/login", loginObj)
                 .then(res => {
-                    console.log(res)
-                        // 성공 시 token 생성
+                    // 성공 시 token 생성
                     let token = res.data.token
 
                     // 토근을 로컬스토리지에 저장
                     localStorage.setItem("access_token", token)
                     dispatch('getMemberInfo')
+                    router.push({ name: "DashBoard" })
                 }).catch((err) => {
-                    console.log(err)
                     commit('loginError')
                 })
         },
 
         logout({ commit }) {
+            localStorage.clear()
             commit("logout")
             router.push({ name: "Login" })
         },
@@ -56,24 +56,27 @@ export default new Vuex.Store({
             // 로컬 스토리지에 저장되어 있는 토큰을 불러온다.
             let token = localStorage.getItem("access_token")
 
-            let config = {
-                headers: {
-                    "access-token": token
-                }
-            }
-            axios.get("https://reqres.in/api/users/2", config)
-                .then(response => {
-                    let userInfo = {
-                        id: response.data.data.id,
-                        first_name: response.data.data.first_name,
-                        last_name: response.data.data.last_name
+            console.log(token)
+
+            if (token != null) {
+                let config = {
+                    headers: {
+                        "access-token": token
                     }
-                    commit('loginSuccess', userInfo)
-                    router.push({ name: "DashBoard" })
-                })
-                .catch(() => {
-                    commit('loginError')
-                })
+                }
+                axios.get("https://reqres.in/api/users/2", config)
+                    .then(response => {
+                        let userInfo = {
+                            id: response.data.data.id,
+                            first_name: response.data.data.first_name,
+                            last_name: response.data.data.last_name
+                        }
+                        commit('loginSuccess', userInfo)
+                    })
+                    .catch(() => {
+                        commit('loginError')
+                    })
+            } else router.push({ name: "Login" })
         }
     }
 })

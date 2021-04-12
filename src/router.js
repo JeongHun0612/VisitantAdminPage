@@ -5,17 +5,33 @@ import AdminPageLayout from './views/AdminPageLayout.vue'
 
 Vue.use(Router)
 
+const requireAuth = () => (to, from, next) => {
+    let act = sessionStorage.getItem('act');
+    let usrif = sessionStorage.getItem('usrif');
+
+    if (act && usrif) {
+        return next();
+    } else {
+        sessionStorage.clear();
+        return next('/');
+    }
+};
+
 const rejectAuthUser = (to, from, next) => {
-    if (store.state.isLogin === true) {
+    let token = localStorage.getItem("access_token")
+
+    if (token !== null) {
         alert("이미 로그인을 하였습니다.")
-        next("/")
+        next("/dashboard")
     } else {
         next()
     }
 }
 
 const onlyAuthUser = (to, from, next) => {
-    if (store.state.isLogin === false) {
+    let token = localStorage.getItem("access_token")
+
+    if (store.state.isLogin === false && token === null) {
         alert("로그인이 필요한 기능입니다.")
         next("/login")
     } else {
@@ -35,7 +51,7 @@ const Admin = () =>
 const routes = [{
     path: '/',
     component: AdminPageLayout,
-    redirect: '/login',
+    redirect: '/dashboard',
     children: [{
             path: '/dashboard',
             name: 'DashBoard',
