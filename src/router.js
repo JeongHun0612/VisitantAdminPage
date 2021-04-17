@@ -51,7 +51,7 @@ const Admin = () =>
 const routes = [{
     path: '/',
     component: AdminPageLayout,
-    redirect: '/dashboard',
+    redirect: '/login',
     children: [{
             path: '/dashboard',
             name: 'DashBoard',
