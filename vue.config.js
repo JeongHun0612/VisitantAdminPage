@@ -1,16 +1,19 @@
+var path = require('path');
+
 module.exports = {
     transpileDependencies: [
         'vuetify'
     ],
-    // devServer: {
-    //     proxy: {
-    //         '/api': {
-    //             target: 'http://172.30.1.1:50000',
-    //             changeOrigin: true,
-    //             pathRewrite: {
-    //                 '^/api': ''
-    //             }
-    //         }
-    //     }
-    // }
+    outputDir: path.resolve("../backend/public"),
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
+        }
+    }
 }

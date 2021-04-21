@@ -5,18 +5,6 @@ import AdminPageLayout from './views/AdminPageLayout.vue'
 
 Vue.use(Router)
 
-const requireAuth = () => (to, from, next) => {
-    let act = sessionStorage.getItem('act');
-    let usrif = sessionStorage.getItem('usrif');
-
-    if (act && usrif) {
-        return next();
-    } else {
-        sessionStorage.clear();
-        return next('/');
-    }
-};
-
 const rejectAuthUser = (to, from, next) => {
     let token = localStorage.getItem("access_token")
 

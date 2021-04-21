@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from "axios";
-import router from './router';
+import axios from 'axios'
+import router from './router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
         userInfo: null,
-        allUsers: [{ id: "1", name: "song", email: "sjh@gmail.com", password: "123456" }],
         isLogin: false,
         isLoginError: false,
+        isLoginErrorMessage: ''
     },
 
     mutations: {
@@ -20,29 +20,34 @@ export default new Vuex.Store({
             state.userInfo = payload
         },
 
-        loginError(state) {
+        loginError(state, payload) {
             state.isLogin = false
-            state.isLoginError = true;
+            state.isLoginError = true
+            state.isLoginErrorMessage = payload
         },
+
         logout(state) {
             state.isLogin = false
             state.isLoginError = false
             state.userInfo = null
-        }
+        },
     },
     actions: {
         login({ commit, dispatch }, loginObj) {
-            axios.post("https://reqres.in/api/login", loginObj)
+            axios.post("api/login", loginObj)
                 .then(res => {
-                    // 성공 시 token 생성
-                    let token = res.data.token
+                    if (res.data.status == 400) {
+                        commit("loginError", res.data.message)
+                    } else {
+                        // 성공 시 token 생성
+                        let token = res.data.token
+                        localStorage.setItem("access_token", token)
 
-                    // 토근을 로컬스토리지에 저장
-                    localStorage.setItem("access_token", token)
-                    dispatch('getMemberInfo')
-                    router.push({ name: "DashBoard" })
+                        dispatch('getUserInfo')
+                        router.push({ name: "DashBoard" })
+                    }
                 }).catch((err) => {
-                    commit('loginError')
+                    console.log(err)
                 })
         },
 
@@ -52,31 +57,28 @@ export default new Vuex.Store({
             router.push({ name: "Login" })
         },
 
-        getMemberInfo({ commit }) {
+        getUserInfo({ commit }) {
             // 로컬 스토리지에 저장되어 있는 토큰을 불러온다.
             let token = localStorage.getItem("access_token")
-
-            console.log(token)
-
-            if (token != null) {
-                let config = {
-                    headers: {
-                        "access-token": token
-                    }
+            let config = {
+                headers: {
+                    "access-token": token
                 }
-                axios.get("https://reqres.in/api/users/2", config)
-                    .then(response => {
+            }
+            if (token != null) {
+                axios.get("api/login", config)
+                    .then(res => {
                         let userInfo = {
-                            id: response.data.data.id,
-                            first_name: response.data.data.first_name,
-                            last_name: response.data.data.last_name
+                            id: res.data.id,
+                            name: res.data.name,
+                            email: res.data.email
                         }
                         commit('loginSuccess', userInfo)
                     })
-                    .catch(() => {
-                        commit('loginError')
+                    .catch((err) => {
+                        console.log(err)
                     })
-            } else router.push({ name: "Login" })
+            }
         }
     }
 })

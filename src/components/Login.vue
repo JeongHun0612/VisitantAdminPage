@@ -3,7 +3,7 @@
     <v-layout align-center row wrap>
       <v-flex xs12>
         <v-alert class="mb-3" :value="isLoginError" type="error">
-          이메일과 비밀번호를 확인해주세요.
+          {{ isLoginErrorMessage }}
         </v-alert>
         <v-alert class="mb-3" :value="isLogin" type="success">
           로그인이 완료되었습니다.
@@ -17,6 +17,7 @@
             <v-text-field
               v-model="email"
               label="email"
+              type="email"
               outlined
               prepend-icon=" mdi-email"
             ></v-text-field>
@@ -48,7 +49,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["isLogin", "isLoginError"]),
+    ...mapState(["isLogin", "isLoginError", "isLoginErrorMessage"]),
   },
   data() {
     return {

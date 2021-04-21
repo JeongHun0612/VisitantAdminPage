@@ -76,6 +76,16 @@
 
 <script>
 export default {
+  created() {
+    this.$Axios
+      .get("api/dashboard")
+      .then((res) => {
+        console.log("success");
+      })
+      .catch((err) => {
+        console.log("err");
+      });
+  },
   data() {
     return {
       chartData: { "2017-05-13": 2, "2017-05-14": 5, "2017-05-15": 4 },
