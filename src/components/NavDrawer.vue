@@ -36,8 +36,9 @@ export default {
   data() {
     return {
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard", link: "/dashboard" },
-        { title: "Admin", icon: "mdi-gavel", link: "/admin" },
+        { title: "DashBoard", icon: "mdi-view-dashboard", link: "/dashboard" },
+        { title: "UserTable", icon: " mdi-table-account", link: "/userTable" },
+        { title: "VisitorTable", icon: "mdi-table", link: "/visitorTable" },
         { title: "Account", icon: "mdi-account-box", link: "/account" },
       ],
     };

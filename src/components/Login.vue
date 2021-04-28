@@ -48,6 +48,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
+  name: "Login",
   computed: {
     ...mapState(["isLogin", "isLoginError", "isLoginErrorMessage"]),
   },

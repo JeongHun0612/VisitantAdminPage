@@ -1,10 +1,13 @@
 <template>
-  <div>Account</div>
+  <div>UserTable</div>
 </template>
 
 <script>
 export default {
-  name: "Account",
+  name: "UsertTable",
+  data() {
+    return {};
+  },
 };
 </script>
 

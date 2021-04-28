@@ -76,6 +76,7 @@
 
 <script>
 export default {
+  name: "DashBoard",
   created() {
     this.$Axios
       .get("api/dashboard")

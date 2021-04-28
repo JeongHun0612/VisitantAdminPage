@@ -31,10 +31,13 @@ const Login = () =>
     import ("./components/Login");
 const DashBoard = () =>
     import ("./components/DashBoard");
+const UserTable = () =>
+    import ("./components/UserTable");
+const VisitorTable = () =>
+    import ("./components/VisitorTable");
 const Account = () =>
     import ("./components/Account");
-const Admin = () =>
-    import ("./components/Admin");
+
 
 const routes = [{
     path: '/',
@@ -53,10 +56,16 @@ const routes = [{
             component: Account
         },
         {
-            path: '/admin',
-            name: 'Admin',
+            path: '/userTable',
+            name: 'UserTable',
             beforeEnter: onlyAuthUser,
-            component: Admin
+            component: UserTable
+        },
+        {
+            path: '/visitorTable',
+            name: 'VisitorTable',
+            beforeEnter: onlyAuthUser,
+            component: VisitorTable
         },
         {
             path: '/login',
