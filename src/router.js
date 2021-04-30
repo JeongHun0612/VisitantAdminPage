@@ -34,7 +34,7 @@ const DashBoard = () =>
 const UserTable = () =>
     import ("./components/UserTable");
 const VisitorTable = () =>
-    import ("./components/VisitorTable");
+    import ("./components/visitortable/Main");
 const Account = () =>
     import ("./components/Account");
 

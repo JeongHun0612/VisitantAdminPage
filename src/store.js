@@ -7,6 +7,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        isEditDialog: false,
+
         userInfo: null,
         isLogin: false,
         isLoginError: false,
