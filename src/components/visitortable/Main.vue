@@ -1,10 +1,7 @@
 <template>
   <div>
-    <VisitorDatePicker
-      v-on:dateSearch="getVisitorData"
-      v-on:dateReload="getVisitorData"
-    />
-    <VisitorTable :data="visitorData" />
+    <VisitorDatePicker />
+    <VisitorTable />
   </div>
 </template>
 
@@ -15,24 +12,7 @@ import VisitorDatePicker from "./VisitorDatePicker.vue";
 export default {
   components: { VisitorTable, VisitorDatePicker },
   created() {
-    this.$Axios
-      .get("api/visitor")
-      .then((res) => {
-        this.visitorData = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-  data() {
-    return {
-      visitorData: [],
-    };
-  },
-  methods: {
-    getVisitorData(data) {
-      this.visitorData = data;
-    },
+    this.$store.dispatch("getVisitorTable");
   },
 };
 </script>

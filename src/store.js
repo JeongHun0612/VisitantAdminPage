@@ -7,12 +7,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        isEditDialog: false,
-
         userInfo: null,
         isLogin: false,
         isLoginError: false,
-        isLoginErrorMessage: ''
+        isLoginErrorMessage: '',
+
+        visitorTable: [],
     },
 
     mutations: {
@@ -33,6 +33,9 @@ export default new Vuex.Store({
             state.isLoginError = false
             state.userInfo = null
         },
+        setVisitorTable(state, payload) {
+            state.visitorTable = payload
+        }
     },
     actions: {
         login({ commit, dispatch }, loginObj) {
@@ -80,6 +83,29 @@ export default new Vuex.Store({
                     .catch((err) => {
                         console.log(err)
                     })
+            }
+        },
+
+        getVisitorTable({ commit }, tableData) {
+            if (!tableData) {
+                axios.get("api/visitor")
+                    .then((res) => {
+                        commit('setVisitorTable', res.data)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            } else {
+                let idArray = []
+                idArray.push(tableData[0].id, tableData[tableData.length - 1].id)
+
+                axios.get(`api/visitor?idx=${idArray}`)
+                    .then((res) => {
+                        commit('setVisitorTable', res.data)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             }
         }
     }

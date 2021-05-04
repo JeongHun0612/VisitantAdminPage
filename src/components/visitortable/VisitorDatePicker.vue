@@ -14,6 +14,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="dateRangeText"
+              style="font-size: 15px"
               label="날짜를 선택해주세요."
               prepend-icon="mdi-calendar"
               append-icon="mdi-reload"
@@ -36,6 +37,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -54,6 +57,8 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(["setVisitorTable"]),
+
     dateSearch() {
       this.$refs.menu.save(this.date);
 
@@ -64,7 +69,7 @@ export default {
         this.$Axios
           .get(`/api/visitor/dateSearch?date=${this.date}`)
           .then((res) => {
-            this.$emit("dateSearch", res.data);
+            this.setVisitorTable(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -73,14 +78,7 @@ export default {
     },
     dateReload() {
       this.date = [];
-      this.$Axios
-        .get("api/visitor")
-        .then((res) => {
-          this.$emit("dateReload", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.$store.dispatch("getVisitorTable");
     },
   },
 };
