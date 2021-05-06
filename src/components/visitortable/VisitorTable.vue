@@ -4,14 +4,26 @@
     <v-data-table
       :headers="headers"
       :items="this.visitorTable"
-      :page.sync="page"
-      :items-per-page="itemsPerPage"
+      show-select
+      v-model="selected"
+      item-key="id"
       :sort-by="['date', 'time']"
       :sort-desc="[true, true]"
       hide-default-footer
-      class="elevation-1"
+      :page.sync="page"
+      :items-per-page="itemsPerPage"
       @page-count="pageCount = $event"
+      class="elevation-1"
     >
+      <template v-slot:[`item.data-table-select`]="{ isSelected, select }">
+        <v-simple-checkbox
+          :value="isSelected"
+          @input="select($event)"
+          :ripple="false"
+          color="error"
+        ></v-simple-checkbox>
+      </template>
+
       <template v-slot:[`item.remark`]="{ item }">
         <v-icon small @click="editRemark(item)">
           {{ getRemarkIcon(item.remark) }}</v-icon
@@ -27,45 +39,24 @@
     </div>
 
     <!-- remark-edit-dialog -->
-    <v-dialog v-model="this.isDialog" max-width="400px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">비고</span>
-        </v-card-title>
-
-        <v-card-text>
-          <v-textarea
-            v-model="remarkText"
-            name="input-7-1"
-            value="내용을 입력해주세요."
-          ></v-textarea>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="remarkEditCancle">
-            Cancel
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="remarkEditSave">
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <EditRemarkDialog :data="dialogData" v-if="this.isRemarkDialog" />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import EditRemarkDialog from "./EditRemarkDialog";
 
 export default {
   props: ["data"],
+  components: { EditRemarkDialog },
   data() {
     return {
       page: 1,
       pageCount: 0,
       itemsPerPage: 10,
       items: [],
+      selected: [],
       headers: [
         { text: "출입", sortable: false, align: "center", value: "inandout" },
         { text: "방문 날짜", align: "center", value: "date" },
@@ -76,13 +67,11 @@ export default {
         { text: "비고", sortable: false, align: "center", value: "remark" },
       ],
 
-      isDialog: false,
-      editIndex: 0,
-      remarkText: "",
+      dialogData: [],
     };
   },
   computed: {
-    ...mapState(["visitorTable"]),
+    ...mapState(["visitorTable", "isRemarkDialog"]),
   },
   methods: {
     getRemarkIcon(remark) {
@@ -92,34 +81,13 @@ export default {
         return "mdi-pencil";
       }
     },
+
     editRemark(item) {
       this.$Axios
         .get(`api/visitor/editRemark/${item.id}`)
         .then((res) => {
-          this.remarkText = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      this.editIndex = item.id;
-      this.isDialog = true;
-    },
-
-    remarkEditCancle() {
-      this.isDialog = false;
-      this.remarkText = "";
-    },
-
-    remarkEditSave() {
-      this.isDialog = false;
-      this.$Axios
-        .patch(`api/visitor/editRemark/${this.editIndex}`, {
-          remark_text: this.remarkText,
-        })
-        .then((res) => {
-          this.remarkText = "";
-          this.$store.dispatch("getVisitorTable", this.visitorTable);
+          this.dialogData = res.data;
+          this.$store.commit("setIsRemarkDialog", true);
         })
         .catch((err) => {
           console.log(err);

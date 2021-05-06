@@ -1,6 +1,10 @@
 <template>
   <div>
-    <VisitorDatePicker />
+    <v-row>
+      <v-col cols="8" sm="4" md="3">
+        <VisitorDatePicker />
+      </v-col>
+    </v-row>
     <VisitorTable />
   </div>
 </template>

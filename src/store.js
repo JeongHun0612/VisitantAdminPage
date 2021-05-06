@@ -13,6 +13,8 @@ export default new Vuex.Store({
         isLoginErrorMessage: '',
 
         visitorTable: [],
+
+        isRemarkDialog: false
     },
 
     mutations: {
@@ -33,8 +35,13 @@ export default new Vuex.Store({
             state.isLoginError = false
             state.userInfo = null
         },
+
         setVisitorTable(state, payload) {
             state.visitorTable = payload
+        },
+
+        setIsRemarkDialog(state, payload) {
+            state.isRemarkDialog = payload
         }
     },
     actions: {
