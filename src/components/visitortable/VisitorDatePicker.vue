@@ -12,7 +12,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-text-field
           v-model="dateRangeText"
-          style="font-size: 15px"
+          style="font-size: 18px"
           label="날짜를 선택해주세요."
           prepend-icon="mdi-calendar"
           append-icon="mdi-reload"

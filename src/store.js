@@ -7,14 +7,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        visitorTable: [],
+
         userInfo: null,
         isLogin: false,
         isLoginError: false,
         isLoginErrorMessage: '',
 
-        visitorTable: [],
-
-        isRemarkDialog: false
+        isRemarkDialog: false,
     },
 
     mutations: {

@@ -4,8 +4,8 @@
     <v-data-table
       :headers="headers"
       :items="this.visitorTable"
-      show-select
       v-model="selected"
+      show-select
       item-key="id"
       :sort-by="['date', 'time']"
       :sort-desc="[true, true]"
@@ -24,12 +24,22 @@
         ></v-simple-checkbox>
       </template>
 
+      <!-- <template v-slot:[`item.selected`]="{ item }">
+        <v-simple-checkbox
+          v-model="item.selected"
+          :ripple="false"
+          color="primary"
+          @click="getSelected(item)"
+        ></v-simple-checkbox>
+      </template> -->
+
       <template v-slot:[`item.remark`]="{ item }">
         <v-icon small @click="editRemark(item)">
           {{ getRemarkIcon(item.remark) }}</v-icon
         >
       </template>
     </v-data-table>
+
     <div class="text-center pt-2">
       <v-pagination
         v-model="page"
@@ -71,7 +81,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["visitorTable", "isRemarkDialog"]),
+    ...mapState(["visitorTable", "visitorSelected", "isRemarkDialog"]),
   },
   methods: {
     getRemarkIcon(remark) {
@@ -92,6 +102,9 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    getSelected(item) {
+      console.log(item);
     },
   },
 };
