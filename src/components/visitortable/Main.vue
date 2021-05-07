@@ -8,7 +8,7 @@
         <VisitorDelete />
       </v-col>
     </v-row>
-    <VisitorTable />
+    <VisitorTable v-on:getSelected="getSelectedData" />
   </div>
 </template>
 
@@ -21,6 +21,11 @@ export default {
   components: { VisitorTable, VisitorDatePicker, VisitorDelete },
   created() {
     this.$store.dispatch("getVisitorTable");
+  },
+  methods: {
+    getSelectedData(selected) {
+      console.log(selected);
+    },
   },
 };
 </script>
