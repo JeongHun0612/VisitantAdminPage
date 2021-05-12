@@ -34,7 +34,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isRemarkDialog"]),
+    ...mapState(["isRemarkDialog", "visitorTable"]),
   },
   methods: {
     ...mapMutations(["setIsRemarkDialog"]),
@@ -64,5 +64,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -51,7 +51,6 @@ import EventBus from "@/event-bus.js";
 import EditRemarkDialog from "./EditRemarkDialog";
 
 export default {
-  props: ["data"],
   components: { EditRemarkDialog },
   created() {
     EventBus.$on("initSelected", (payload) => {
@@ -66,10 +65,10 @@ export default {
       items: [],
       selected: [],
       headers: [
-        { text: "출입", sortable: false, align: "center", value: "inandout" },
+        // { text: "출입", sortable: false, align: "center", value: "inandout" },
         { text: "방문 날짜", align: "center", value: "date" },
         { text: "방문 시간", align: "center", value: "time" },
-        { text: "이름", sortable: false, align: "center", value: "name" },
+        { text: "이름", sortable: false, align: "center", value: "face_id" },
         { text: "성별", sortable: false, align: "center", value: "gender" },
         { text: "연령대", sortable: false, align: "center", value: "age" },
         { text: "비고", sortable: false, align: "center", value: "remark" },
