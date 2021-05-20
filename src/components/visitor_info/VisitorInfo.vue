@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-row no-gutters>
-      <v-col cols="8" sm="4" md="3">
+      <v-col cols="8" sm="3" md="4">
         <VisitorDatePicker />
       </v-col>
-      <v-col class="mt-4" align="end" cols="4" sm="4" md="9">
+      <v-col class="mt-4" align="end" cols="4" sm="9" md="8">
         <VisitorDelete />
       </v-col>
     </v-row>
@@ -19,9 +19,11 @@ import VisitorDelete from "./VisitorDelete.vue";
 
 export default {
   components: { VisitorTable, VisitorDatePicker, VisitorDelete },
+
   created() {
     this.$store.dispatch("getVisitorTable");
   },
+
   methods: {
     getSelectedData(selected) {
       console.log(selected);

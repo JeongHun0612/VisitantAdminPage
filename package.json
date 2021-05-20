@@ -15,6 +15,7 @@
         "express": "^4.17.1",
         "jsonwebtoken": "^8.5.1",
         "vue": "^2.6.10",
+        "vue-chartjs": "^3.5.1",
         "vue-chartkick": "0.6.1",
         "vue-moment": "^4.1.0",
         "vue-router": "^3.0.3",

@@ -51,6 +51,7 @@ import EventBus from "@/event-bus.js";
 import EditRemarkDialog from "./EditRemarkDialog";
 
 export default {
+  // props: ["data"],
   components: { EditRemarkDialog },
   created() {
     EventBus.$on("initSelected", (payload) => {
@@ -78,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["visitorTable", "isRemarkDialog"]),
+    ...mapState(["visitorTable", "userInfo", "isRemarkDialog"]),
   },
   methods: {
     getRemarkIcon(remark) {
