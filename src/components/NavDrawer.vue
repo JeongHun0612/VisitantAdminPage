@@ -37,12 +37,12 @@ export default {
     return {
       items: [
         { title: "DashBoard", icon: "mdi-view-dashboard", link: "/dashboard" },
+        { title: "FaceInfo", icon: " mdi-face-recognition", link: "/faceInfo" },
         {
-          title: "Visitor Info",
-          icon: " mdi-table-account",
-          link: "/visitorInfo",
+          title: "VisitorList",
+          icon: "mdi-table-account",
+          link: "/visitorList",
         },
-        { title: "Visitor List", icon: "mdi-table", link: "/visitorList" },
         { title: "Account", icon: "mdi-account-box", link: "/account" },
       ],
     };

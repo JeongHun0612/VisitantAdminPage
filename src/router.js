@@ -31,35 +31,34 @@ const Login = () =>
     import ("./components/Login");
 const DashBoard = () =>
     import ("./components/dashboard/DashBoard");
-const VisitorInfo = () =>
-    import ("./components/visitor_info/VisitorInfo");
+const FaceInfo = () =>
+    import ("./components/face_info/FaceInfo");
 const VisitorList = () =>
-    import ("./components/VisitorList");
+    import ("./components/visitor_list/VisitorList");
 const Account = () =>
     import ("./components/Account");
-
 
 const routes = [{
     path: '/',
     component: AdminPageLayout,
     redirect: '/login',
     children: [{
+            path: '/login',
+            name: 'Login',
+            beforeEnter: rejectAuthUser,
+            component: Login
+        },
+        {
             path: '/dashboard',
             name: 'DashBoard',
             beforeEnter: onlyAuthUser,
             component: DashBoard
         },
         {
-            path: '/account',
-            name: 'Account',
+            path: '/faceInfo',
+            name: 'FaceInfo',
             beforeEnter: onlyAuthUser,
-            component: Account
-        },
-        {
-            path: '/visitorInfo',
-            name: 'VisitorInfo',
-            beforeEnter: onlyAuthUser,
-            component: VisitorInfo
+            component: FaceInfo
         },
         {
             path: '/visitorList',
@@ -68,11 +67,11 @@ const routes = [{
             component: VisitorList
         },
         {
-            path: '/login',
-            name: 'Login',
-            beforeEnter: rejectAuthUser,
-            component: Login
-        },
+            path: '/account',
+            name: 'Account',
+            beforeEnter: onlyAuthUser,
+            component: Account
+        }
     ]
 }, ]
 

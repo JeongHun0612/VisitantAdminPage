@@ -53,7 +53,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["setVisitorTable"]),
+    ...mapMutations(["setFaceInfoTable"]),
 
     dateSearch() {
       this.$refs.menu.save(this.date);
@@ -63,9 +63,9 @@ export default {
       } else {
         this.isDateError = false;
         this.$Axios
-          .get(`/api/visitor/dateSearch?date=${this.date}`)
+          .get(`/api/faceInfo/dateSearch?date=${this.date}`)
           .then((res) => {
-            this.setVisitorTable(res.data);
+            this.setFaceInfoTable(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -74,7 +74,7 @@ export default {
     },
     dateReload() {
       this.date = [];
-      this.$store.dispatch("getVisitorTable");
+      this.$store.dispatch("getFaceInfoTable");
     },
   },
 };

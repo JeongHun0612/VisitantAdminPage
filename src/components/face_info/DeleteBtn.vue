@@ -5,7 +5,7 @@
       <v-icon left> mdi-delete </v-icon>
       선택삭제
     </v-btn>
-    <v-btn class="mr-4" outlined @click="allDelete">
+    <v-btn class="mr-4" color="error" outlined @click="allDelete">
       <v-icon left> mdi-delete </v-icon>
       전체삭제
     </v-btn>
@@ -48,13 +48,13 @@ export default {
         if (confirm("정말로 삭제하시겠습니까?")) {
           this.getSelectedData.forEach((item) => {
             this.$Axios
-              .delete(`api/visitor/delete/${item.id}`)
+              .delete(`api/faceInfo/delete/${item.id}`)
               .then((res) => {})
               .catch((err) => {
                 console.log(err);
               });
           });
-          this.$store.dispatch("getVisitorTable");
+          this.$store.dispatch("getFaceInfoTable");
           this.getSelectedData = undefined;
           EventBus.$emit("initSelected", this.getSelectedData);
         }
@@ -64,9 +64,9 @@ export default {
     allDelete() {
       if (confirm("정말로 삭제하시겠습니까?")) {
         this.$Axios
-          .delete("api/visitor/delete")
+          .delete("api/faceInfo/delete")
           .then((res) => {
-            this.$store.dispatch("getVisitorTable");
+            this.$store.dispatch("getFaceInfoTable");
           })
           .catch((err) => {
             console.log(err);

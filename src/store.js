@@ -7,14 +7,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        visitorTable: [],
+        faceInfoTable: [],
+        visitorListTable: [],
 
         userInfo: null,
         isLogin: false,
         isLoginError: false,
         isLoginErrorMessage: "",
-
-        isRemarkDialog: false,
     },
 
     mutations: {
@@ -36,12 +35,8 @@ export default new Vuex.Store({
             state.userInfo = null;
         },
 
-        setVisitorTable(state, payload) {
-            state.visitorTable = payload;
-        },
-
-        setIsRemarkDialog(state, payload) {
-            state.isRemarkDialog = payload;
+        setFaceInfoTable(state, payload) {
+            state.faceInfoTable = payload;
         },
     },
     actions: {
@@ -96,12 +91,12 @@ export default new Vuex.Store({
             }
         },
 
-        getVisitorTable({ commit }, tableData) {
+        getFaceInfoTable({ commit }, tableData) {
             if (!tableData) {
                 axios
-                    .get("api/visitor")
+                    .get("api/faceInfo")
                     .then((res) => {
-                        commit("setVisitorTable", res.data);
+                        commit("setFaceInfoTable", res.data);
                     })
                     .catch((err) => {
                         console.log(err);
@@ -111,9 +106,9 @@ export default new Vuex.Store({
                 idArray.push(tableData[0].id, tableData[tableData.length - 1].id);
 
                 axios
-                    .get(`api/visitor?idx=${idArray}`)
+                    .get(`api/faceInfo?idx=${idArray}`)
                     .then((res) => {
-                        commit("setVisitorTable", res.data);
+                        commit("setFaceInfoTable", res.data);
                     })
                     .catch((err) => {
                         console.log(err);
