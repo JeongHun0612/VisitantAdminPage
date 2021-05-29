@@ -29,6 +29,8 @@ const onlyAuthUser = (to, from, next) => {
 
 const Login = () =>
     import ("./components/Login");
+const Register = () =>
+    import ("./components/Register")
 const DashBoard = () =>
     import ("./components/dashboard/DashBoard");
 const FaceInfo = () =>
@@ -47,6 +49,11 @@ const routes = [{
             name: 'Login',
             beforeEnter: rejectAuthUser,
             component: Login
+        },
+        {
+            path: '/register',
+            name: 'Register',
+            component: Register
         },
         {
             path: '/dashboard',

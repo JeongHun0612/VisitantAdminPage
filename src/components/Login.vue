@@ -13,7 +13,7 @@
             <v-icon class="mr-2">mdi-account</v-icon> Login
           </v-card-title>
           <v-divider></v-divider>
-          <div class="mt-3 pa-3">
+          <div class="mt-3 pa-4">
             <v-text-field
               v-model="email"
               label="email"
@@ -38,6 +38,10 @@
               LOGIN
             </v-btn>
           </div>
+          <div class="text-center pb-3">
+            <span class="mr-3">Not registered?</span>
+            <router-link to="/register">Create an account</router-link>
+          </div>
         </v-card>
       </v-flex>
     </v-layout>
@@ -54,8 +58,8 @@ export default {
   },
   data() {
     return {
-      email: null,
-      password: null,
+      email: "",
+      password: "",
     };
   },
   methods: {

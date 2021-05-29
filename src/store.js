@@ -10,6 +10,9 @@ export default new Vuex.Store({
         faceInfoTable: [],
         visitorListTable: [],
 
+        isRegisterError: false,
+        isRegisterErrorMessage: "",
+
         userInfo: null,
         isLogin: false,
         isLoginError: false,
@@ -17,6 +20,15 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        registerSuccess(state) {
+            state.isRegisterError = false;
+        },
+
+        registerError(state, payload) {
+            state.isRegisterError = true;
+            state.isRegisterErrorMessage = payload;
+        },
+
         loginSuccess(state, payload) {
             state.isLogin = true;
             state.isLoginError = false;
@@ -40,6 +52,21 @@ export default new Vuex.Store({
         },
     },
     actions: {
+        register({ commit }, registerObj) {
+            axios.post("api/register", registerObj)
+                .then((res) => {
+                    if (res.data.status == 400) {
+                        commit("registerError", res.data.message)
+                    } else {
+                        commit("registerSuccess")
+                        alert(res.data.message)
+                        router.push({ name: "Login" });
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                })
+        },
+
         login({ commit, dispatch }, loginObj) {
             axios
                 .post("api/login", loginObj)
