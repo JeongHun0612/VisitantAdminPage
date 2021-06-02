@@ -67,7 +67,7 @@ export default new Vuex.Store({
                 })
         },
 
-        login({ commit, dispatch }, loginObj) {
+        login({ commit }, loginObj) {
             axios
                 .post("api/login", loginObj)
                 .then((res) => {
@@ -77,9 +77,10 @@ export default new Vuex.Store({
                         // 성공 시 token 생성
                         let token = res.data.token;
                         localStorage.setItem("access_token", token);
+                        localStorage.setItem("user_role", res.data.userInfo.role);
 
-                        dispatch("getUserInfo");
-                        router.push({ name: "DashBoard" });
+                        commit("loginSuccess", res.data.userInfo);
+                        router.push({ name: "Account" });
                     }
                 })
                 .catch((err) => {
@@ -109,12 +110,15 @@ export default new Vuex.Store({
                             id: res.data.id,
                             name: res.data.name,
                             email: res.data.email,
+                            role: res.data.role
                         };
                         commit("loginSuccess", userInfo);
                     })
                     .catch((err) => {
                         console.log(err);
                     });
+            } else {
+                router.push({ name: "Login" });
             }
         },
 

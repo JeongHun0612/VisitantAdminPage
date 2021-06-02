@@ -21,8 +21,6 @@ import DeleteBtn from "./DeleteBtn.vue";
 
 export default {
   components: { VisitorListTable, DatePicker, CreateBtn, DeleteBtn },
-
-  created() {},
 };
 </script>
 

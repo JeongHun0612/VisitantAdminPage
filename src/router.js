@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from './store'
 import AdminPageLayout from './views/AdminPageLayout.vue'
 
 Vue.use(Router)
 
-const rejectAuthUser = (to, from, next) => {
+const alreayLogin = (to, from, next) => {
     let token = localStorage.getItem("access_token")
 
     if (token !== null) {
@@ -16,14 +15,43 @@ const rejectAuthUser = (to, from, next) => {
     }
 }
 
-const onlyAuthUser = (to, from, next) => {
+const onlyLoginUser = (to, from, next) => {
     let token = localStorage.getItem("access_token")
 
-    if (store.state.isLogin === false && token === null) {
+    if (token === null) {
+        alert("로그인이 필요한 기능입니다.")
+        next("/login")
+    } else next()
+}
+
+const onlyAuthUser = (to, from, next) => {
+    let token = localStorage.getItem("access_token")
+    let role = localStorage.getItem("user_role")
+
+    if (token === null) {
         alert("로그인이 필요한 기능입니다.")
         next("/login")
     } else {
-        next()
+        if (role === "null") {
+            alert("권한이 없습니다.")
+            next(from)
+        } else next()
+    }
+}
+
+const onlySuperUser = (to, from, next) => {
+    let token = localStorage.getItem("access_token")
+    let role = localStorage.getItem("user_role")
+
+    if (token === null) {
+        alert("로그인이 필요한 기능입니다.")
+        next("/login")
+    } else {
+        if (role === 's') next()
+        else {
+            alert("권한이 없습니다.")
+            next(from)
+        }
     }
 }
 
@@ -37,17 +65,18 @@ const FaceInfo = () =>
     import ("./components/face_info/FaceInfo");
 const VisitorList = () =>
     import ("./components/visitor_list/VisitorList");
+const UserList = () =>
+    import ("./components/user_list/UserList");
 const Account = () =>
     import ("./components/Account");
 
 const routes = [{
     path: '/',
     component: AdminPageLayout,
-    redirect: '/login',
     children: [{
             path: '/login',
             name: 'Login',
-            beforeEnter: rejectAuthUser,
+            beforeEnter: alreayLogin,
             component: Login
         },
         {
@@ -74,9 +103,15 @@ const routes = [{
             component: VisitorList
         },
         {
+            path: '/userList',
+            name: 'UserList',
+            beforeEnter: onlySuperUser,
+            component: UserList
+        },
+        {
             path: '/account',
             name: 'Account',
-            beforeEnter: onlyAuthUser,
+            beforeEnter: onlyLoginUser,
             component: Account
         }
     ]

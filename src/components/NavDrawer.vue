@@ -43,6 +43,7 @@ export default {
           icon: "mdi-table-account",
           link: "/visitorList",
         },
+        { title: "UserList", icon: "mdi-table-account", link: "/userList" },
         { title: "Account", icon: "mdi-account-box", link: "/account" },
       ],
     };
