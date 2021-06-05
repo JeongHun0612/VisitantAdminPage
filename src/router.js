@@ -47,7 +47,7 @@ const onlySuperUser = (to, from, next) => {
         alert("로그인이 필요한 기능입니다.")
         next("/login")
     } else {
-        if (role === 's') next()
+        if (role === "super") next()
         else {
             alert("권한이 없습니다.")
             next(from)
@@ -72,6 +72,7 @@ const Account = () =>
 
 const routes = [{
     path: '/',
+    name: 'Home',
     component: AdminPageLayout,
     children: [{
             path: '/login',

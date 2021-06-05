@@ -9,6 +9,7 @@ export default new Vuex.Store({
     state: {
         faceInfoTable: [],
         visitorListTable: [],
+        userListTable: [],
 
         isRegisterError: false,
         isRegisterErrorMessage: "",
@@ -50,6 +51,10 @@ export default new Vuex.Store({
         setFaceInfoTable(state, payload) {
             state.faceInfoTable = payload;
         },
+
+        setUserListTable(state, payload) {
+            state.userListTable = payload;
+        }
     },
     actions: {
         register({ commit }, registerObj) {
@@ -146,5 +151,16 @@ export default new Vuex.Store({
                     });
             }
         },
+
+        getUserListTable({ commit }) {
+            axios
+                .get("api/userList")
+                .then((res) => {
+                    commit("setUserListTable", res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     },
 });
