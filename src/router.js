@@ -114,7 +114,7 @@ const routes = [{
             name: 'Account',
             beforeEnter: onlyLoginUser,
             component: Account
-        }
+        },
     ]
 }, ]
 

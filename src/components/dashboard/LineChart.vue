@@ -3,6 +3,8 @@ import { Line } from "vue-chartjs";
 
 export default {
   extends: Line,
+  props: ["chartData"],
+  created() {},
   data() {
     return {
       datacollection: {
@@ -56,7 +58,6 @@ export default {
         },
         title: {
           display: true,
-          text: "연간 방문자 수",
         },
         responsive: true,
         maintainAspectRatio: false, // 차트 width, height 크기조절

@@ -7,18 +7,14 @@ export default {
     return {
       datacollection: {
         labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
+          "0 ~ 10세",
+          "10 ~ 20세",
+          "20 ~ 30세",
+          "30 ~ 40세",
+          "40 ~ 50세",
+          "50 ~ 60세",
+          "60 ~ 70세",
+          "70세 이상",
         ],
         datasets: [
           {
@@ -52,7 +48,7 @@ export default {
           ],
         },
         legend: {
-          display: true,
+          display: false,
         },
         responsive: true,
         maintainAspectRatio: false,
