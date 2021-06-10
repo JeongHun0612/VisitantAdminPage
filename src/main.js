@@ -8,14 +8,11 @@ import vueMoment from "vue-moment";
 
 import 'chart.js'
 import 'hchs-vue-charts'
-import Chartkick from "vue-chartkick";
-import Chart from "chart.js";
 import vuetify from "./plugins/vuetify";
 
 Vue.use(vueMoment, moment);
 
 Vue.use(window.VueCharts)
-Vue.use(Chartkick.use(Chart));
 
 Vue.prototype.$Axios = axios;
 Vue.config.productionTip = false;
