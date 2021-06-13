@@ -32,7 +32,7 @@ const onlyAuthUser = (to, from, next) => {
         alert("로그인이 필요한 기능입니다.")
         next("/login")
     } else {
-        if (role === "null") {
+        if (role === "null" || role === "") {
             alert("권한이 없습니다.")
             next(from)
         } else next()

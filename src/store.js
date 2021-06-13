@@ -15,6 +15,7 @@ export default new Vuex.Store({
         isRegisterErrorMessage: "",
 
         userInfo: null,
+        userFirstName: null,
         isLogin: false,
         isLoginError: false,
         isLoginErrorMessage: "",
@@ -34,6 +35,7 @@ export default new Vuex.Store({
             state.isLogin = true;
             state.isLoginError = false;
             state.userInfo = payload;
+            state.userFirstName = state.userInfo.name.slice(0, 1)
         },
 
         loginError(state, payload) {
@@ -46,6 +48,7 @@ export default new Vuex.Store({
             state.isLogin = false;
             state.isLoginError = false;
             state.userInfo = null;
+            state.userFirstName = null;
         },
 
         setFaceInfoTable(state, payload) {
