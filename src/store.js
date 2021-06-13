@@ -131,6 +131,7 @@ export default new Vuex.Store({
         },
 
         getFaceInfoTable({ commit }, tableData) {
+            // 전체 FaceInfoTable 요청
             if (!tableData) {
                 axios
                     .get("api/faceInfo")
@@ -140,7 +141,9 @@ export default new Vuex.Store({
                     .catch((err) => {
                         console.log(err);
                     });
-            } else {
+            }
+            // 현재 검색한(DatePicker) FaceInfoTable만 요청
+            else {
                 let idArray = [];
                 idArray.push(tableData[0].id, tableData[tableData.length - 1].id);
 

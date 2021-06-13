@@ -5,6 +5,7 @@
         <v-alert class="mb-3" :value="isRegisterError" type="error">
           {{ isRegisterErrorMessage }}
         </v-alert>
+        <!-- Register Info - Input Card -->
         <v-card>
           <v-card-title>
             <v-icon class="mr-2">mdi-account</v-icon> Register

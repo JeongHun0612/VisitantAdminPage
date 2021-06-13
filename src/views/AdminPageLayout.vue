@@ -14,10 +14,5 @@ export default {
   components: {
     AppBar,
   },
-  data() {
-    return {
-      drawer: true,
-    };
-  },
 };
 </script>

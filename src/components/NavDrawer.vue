@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       items: [
-        { title: "DashBoard", icon: "mdi-view-dashboard", link: "/dashboard" },
+        { title: "DashBoard", icon: "mdi-view-dashboard", link: "/dashBoard" },
         { title: "FaceInfo", icon: " mdi-face-recognition", link: "/faceInfo" },
         {
           title: "VisitorList",

@@ -4,6 +4,7 @@ import AdminPageLayout from './views/AdminPageLayout.vue'
 
 Vue.use(Router)
 
+// login true 상태일때 login page로 넘어가려하는 경우
 const alreayLogin = (to, from, next) => {
     let token = localStorage.getItem("access_token")
 
@@ -15,6 +16,7 @@ const alreayLogin = (to, from, next) => {
     }
 }
 
+// login이 true일 경우만
 const onlyLoginUser = (to, from, next) => {
     let token = localStorage.getItem("access_token")
 
@@ -24,6 +26,7 @@ const onlyLoginUser = (to, from, next) => {
     } else next()
 }
 
+// role(권한)이 null이 아닐 경우
 const onlyAuthUser = (to, from, next) => {
     let token = localStorage.getItem("access_token")
     let role = localStorage.getItem("user_role")
@@ -39,6 +42,7 @@ const onlyAuthUser = (to, from, next) => {
     }
 }
 
+// role(권한)이 super 관리자일 경우
 const onlySuperUser = (to, from, next) => {
     let token = localStorage.getItem("access_token")
     let role = localStorage.getItem("user_role")
@@ -70,56 +74,52 @@ const UserList = () =>
 const Account = () =>
     import ("./components/Account");
 
-const routes = [{
-    path: '/',
-    name: 'Home',
-    component: AdminPageLayout,
-    children: [{
-            path: '/login',
-            name: 'Login',
-            beforeEnter: alreayLogin,
-            component: Login
-        },
-        {
-            path: '/register',
-            name: 'Register',
-            component: Register
-        },
-        {
-            path: '/dashboard',
-            name: 'DashBoard',
-            beforeEnter: onlyAuthUser,
-            component: DashBoard
-        },
-        {
-            path: '/faceInfo',
-            name: 'FaceInfo',
-            beforeEnter: onlyAuthUser,
-            component: FaceInfo
-        },
-        {
-            path: '/visitorList',
-            name: 'VisitorList',
-            beforeEnter: onlyAuthUser,
-            component: VisitorList
-        },
-        {
-            path: '/userList',
-            name: 'UserList',
-            beforeEnter: onlySuperUser,
-            component: UserList
-        },
-        {
-            path: '/account',
-            name: 'Account',
-            beforeEnter: onlyLoginUser,
-            component: Account
-        },
-    ]
-}, ]
-
 export default new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes
+    routes: [{
+        path: '/',
+        name: 'Home',
+        component: AdminPageLayout,
+        children: [{
+                path: '/login',
+                name: 'Login',
+                beforeEnter: alreayLogin,
+                component: Login
+            },
+            {
+                path: '/register',
+                name: 'Register',
+                component: Register
+            },
+            {
+                path: '/dashBoard',
+                name: 'DashBoard',
+                beforeEnter: onlyAuthUser,
+                component: DashBoard
+            },
+            {
+                path: '/faceInfo',
+                name: 'FaceInfo',
+                beforeEnter: onlyAuthUser,
+                component: FaceInfo
+            },
+            {
+                path: '/visitorList',
+                name: 'VisitorList',
+                beforeEnter: onlyAuthUser,
+                component: VisitorList
+            },
+            {
+                path: '/userList',
+                name: 'UserList',
+                beforeEnter: onlySuperUser,
+                component: UserList
+            },
+            {
+                path: '/account',
+                name: 'Account',
+                beforeEnter: onlyLoginUser,
+                component: Account
+            },
+        ]
+    }, ]
 })

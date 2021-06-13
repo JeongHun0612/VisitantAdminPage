@@ -8,6 +8,7 @@
         <v-alert class="mb-3" :value="isLogin" type="success">
           로그인이 완료되었습니다.
         </v-alert>
+        <!-- Login Info - Input Card -->
         <v-card>
           <v-card-title>
             <v-icon class="mr-2">mdi-account</v-icon> Login

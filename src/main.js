@@ -21,6 +21,7 @@ new Vue({
     router,
     store,
     beforeCreate() {
+        // 세로고침 리셋 방지
         this.$store.dispatch("getUserInfo");
     },
     vuetify,
