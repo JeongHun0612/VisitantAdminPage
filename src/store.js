@@ -55,6 +55,10 @@ export default new Vuex.Store({
             state.faceInfoTable = payload;
         },
 
+        setVisitorListTable(state, payload) {
+            state.visitorListTable = payload;
+        },
+
         setUserListTable(state, payload) {
             state.userListTable = payload;
         }
@@ -151,6 +155,35 @@ export default new Vuex.Store({
                     .get(`api/faceInfo?idx=${idArray}`)
                     .then((res) => {
                         commit("setFaceInfoTable", res.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        },
+
+        getVisitorListTable({ commit }, tableData) {
+            // 전체 VisitorListTable 요청
+            if (!tableData) {
+                axios
+                    .get("api/visitorList")
+                    .then((res) => {
+                        commit("setVisitorListTable", res.data);
+                        console.log(res.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+            // 현재 검색한(DatePicker) VisitorListTable만 요청
+            else {
+                let idArray = [];
+                idArray.push(tableData[0].id, tableData[tableData.length - 1].id);
+
+                axios
+                    .get(`api/visitorList?idx=${idArray}`)
+                    .then((res) => {
+                        commit("setVisitorListTable", res.data);
                     })
                     .catch((err) => {
                         console.log(err);

@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -51,12 +53,27 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(["setVisitorListTable"]),
+
     dateSearch() {
       this.$refs.menu.save(this.date);
-      console.log("dateSearch");
+      if (this.date.length == 0) {
+        this.isDateError = true;
+      } else {
+        this.isDateError = false;
+        this.$Axios
+          .get(`/api/visitorList/dateSearch?date=${this.date}`)
+          .then((res) => {
+            this.setVisitorListTable(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
     dateReload() {
-      console.log("reload");
+      this.date = [];
+      this.$store.dispatch("getVisitorListTable");
     },
   },
 };

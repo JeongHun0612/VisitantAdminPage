@@ -1,71 +1,81 @@
 <template>
   <div>
-    <!-- visitor-table -->
-    <v-data-table
-      :headers="headers"
-      :items="itmes"
-      :sort-by="['date', 'time']"
-      :sort-desc="[true, true]"
-      hide-default-footer
-      :page.sync="page"
-      :items-per-page="itemsPerPage"
-      @page-count="pageCount = $event"
-      class="elevation-1"
-    ></v-data-table>
+    <v-container fluid>
+      <v-data-iterator
+        :items="this.visitorListTable"
+        :page.sync="page"
+        :items-per-page="itemsPerPage"
+        @page-count="pageCount = $event"
+        hide-default-footer
+      >
+        <template v-slot:default="props">
+          <v-row>
+            <v-col
+              v-for="item in props.items"
+              :key="item.name"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="2"
+            >
+              <v-card>
+                <v-container fluid>
+                  <v-layout column>
+                    <v-flex mb-5>
+                      <v-img
+                        class="mx-1"
+                        aspect-ratio="1"
+                        :src="getImageUrl(item.ExternalImageId)"
+                      ></v-img>
+                    </v-flex>
+                    <v-flex style="font-size: 15px"
+                      >날짜 : {{ item.date }}</v-flex
+                    >
+                    <v-flex style="font-size: 15px"
+                      >시간 : {{ item.time }}</v-flex
+                    >
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-col>
+          </v-row>
+        </template>
+      </v-data-iterator>
 
-    <div class="text-center pt-2">
-      <v-pagination
-        v-model="page"
-        :length="pageCount"
-        :total-visible="7"
-      ></v-pagination>
-    </div>
+      <div class="text-center pt-2">
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+          :total-visible="7"
+        ></v-pagination>
+      </div>
+    </v-container>
   </div>
 </template>
-
 <script>
-import EventBus from "@/event-bus.js";
+import { mapState } from "vuex";
 
 export default {
-  created() {
-    EventBus.$on("initSelected", (payload) => {
-      this.selected = payload;
-    });
-  },
   data() {
     return {
       page: 1,
       pageCount: 0,
-      itemsPerPage: 10,
-      itmes: [
-        {
-          date: "2021-12-20",
-          time: "15:46",
-          name: "홍길동",
-          addr: "대덕구",
-          tel: "010-2610-3442",
-          temperature: "36.5",
-        },
-      ],
-      selected: [],
-      headers: [
-        { text: "방문 날짜", align: "center", value: "date" },
-        { text: "방문 시간", align: "center", value: "time" },
-        { text: "이름", sortable: false, align: "center", value: "name" },
-        { text: "거주지", sortable: false, align: "center", value: "addr" },
-        { text: "전화번호", sortable: false, align: "center", value: "tel" },
-        {
-          text: "온도",
-          sortable: false,
-          align: "center",
-          value: "temperature",
-        },
-        { text: "비고", sortable: false, align: "center", value: "remark" },
-      ],
+      itemsPerPage: 12,
+      items: [],
     };
+  },
+  computed: {
+    ...mapState(["visitorListTable"]),
   },
   methods: {
     getSelected() {},
+
+    getImageUrl(item) {
+      const urlHeader =
+        "https://final-facecog-bucket.s3.ap-northeast-2.amazonaws.com/upload/";
+
+      return urlHeader + item + "jpg";
+    },
   },
 };
 </script>
