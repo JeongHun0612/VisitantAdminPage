@@ -6,7 +6,7 @@
       accept="image/png, image/jpeg, image/bmp"
       outlined
       dense
-      @change="imageFileChange()"
+      @change="imageFileChange"
     ></v-file-input>
   </div>
 </template>
@@ -23,17 +23,17 @@ export default {
   methods: {
     ...mapMutations(["setVisitorListTable"]),
 
-    imageFileChange() {
-      this.$Axios
-        .get("api/visitorList/faceSearch")
-        .then((res) => {
-          console.log(typeof res.data);
-          console.log(res.data);
-          this.setVisitorListTable(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    imageFileChange(file) {
+      if (file != null) {
+        this.$Axios
+          .get(`/api/visitorList/faceSearch?faceFiles=${this.files.name}`)
+          .then((res) => {
+            this.setVisitorListTable(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
   },
 };
