@@ -12,7 +12,7 @@
           <v-row>
             <v-col
               v-for="item in props.items"
-              :key="item.name"
+              :key="item.ExternalImageId"
               cols="12"
               sm="6"
               md="4"
@@ -68,8 +68,6 @@ export default {
     ...mapState(["visitorListTable"]),
   },
   methods: {
-    getSelected() {},
-
     getImageUrl(item) {
       const urlHeader =
         "https://final-facecog-bucket.s3.ap-northeast-2.amazonaws.com/upload/";
